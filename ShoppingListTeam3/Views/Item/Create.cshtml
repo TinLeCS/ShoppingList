@@ -1,0 +1,91 @@
+﻿@model ShoppingListTeam3.Models.ItemViewModel
+
+@{
+    ViewBag.Title = "Create New Item";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                <input type="file" name="Image" class="filestyle" data-buttonName="btn-primary" data-buttonText="Choose image" data-placeholder="No file" data-iconName="glyphicon glyphicon-picture">
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    List<SelectListItem> listPriorities = new List<SelectListItem>();
+                    listPriorities.Add(
+                        new SelectListItem
+                        {
+                            Text = "Grab it now!",
+                            Value = "1",
+                            Selected = true
+                        }
+                    );
+                    listPriorities.Add(
+                        new SelectListItem
+                        {
+                            Text = "Need it soon",
+                            Value = "2",
+                        }
+                    );
+                    listPriorities.Add(
+                        new SelectListItem
+                        {
+                            Text = "It can wait",
+                            Value = "3"
+                        }
+                    );
+                }
+
+                @Html.DropDownListFor(model => model.Priority, listPriorities, new { @class = "btn btn-default" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsChecked, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBox("IsChecked", Model.IsChecked ?? false)
+                    @Html.ValidationMessageFor(model => model.IsChecked, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="@Url.Action("Index", "Item", new { id = ViewBag.shoppingListID })" class="btn btn-primary btn-lg">
+        <span class="glyphicon glyphicon-arrow-left"></span> &nbsp;
+    </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
