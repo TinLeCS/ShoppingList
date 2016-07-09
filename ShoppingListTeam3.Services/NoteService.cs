@@ -30,38 +30,7 @@ namespace ShoppingListTeam3.Services
                 return null;
         }
 
-        public bool CreateNote(NoteViewModel vm, int itemId)
-        {
-            using (var ctx = new ShoppingListDbContext())
-            {
-                var entity =
-                    new Note
-                    {
-                        ItemId = itemId,
-                        Body = vm.Body,
-                        CreatedUtc = DateTimeOffset.Now,
-                    };
-
-                ctx.Notes.Add(entity);
-
-                return ctx.SaveChanges() == 1;
-            }
-        }
-
-        public bool UpdateNote(NoteViewModel vm)
-        {
-            using (var ctx = new ShoppingListDbContext())
-            {
-                var entity = ctx.Notes.SingleOrDefault(e => e.ItemId == vm.ItemId);
-
-                entity.Body = vm.Body;
-                entity.ModifiedUtc = DateTimeOffset.Now;
-
-                return ctx.SaveChanges() == 1;
-            }
-        }
-
-        public bool DeleteItem(int? id)
+        public bool DeleteNote(int? id)
         {
             using (var ctx = new ShoppingListDbContext())
             {

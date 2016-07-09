@@ -78,8 +78,8 @@
             <th></th>
         </tr>
         <tr>
-            <td>
-                @Model.Note.Body
+            <td id="row">
+                <p id="content">@Model.Note.Body</p>
             </td>
             <td>
                 @Model.Note.DisplayDateTimeOffset(Model.Note.CreatedUtc)
@@ -88,31 +88,61 @@
                 @Model.Note.DisplayDateTimeOffset(Model.Note.ModifiedUtc)
             </td>
             <td>
-                @Html.ActionLink("Edit", "../Note/Edit", new { id = Model.Note.ItemId, shoppingListID = ViewBag.shoppingListID }, new { @class = "btn btn-primary btn-sm" })
+                @*@Html.ActionLink("Edit", "../Note/Edit", new { id = Model.Note.ItemId, shoppingListID = ViewBag.shoppingListID }, new { @class = "btn btn-primary btn-sm" })*@
+                <button class="btn btn-primary btn-sm" id="edit">Edit</button>
                 @Html.ActionLink("Delete", "../Note/Delete", new { id = Model.Note.ItemId, shoppingListID = ViewBag.shoppingListID },
                new { onclick = "return confirm('Do you really want to delete this note?')", @class = "btn btn-primary btn-sm" })
             </td>
         </tr>
     </table>
+    <div id="buttonGroup" style="display: none">
+        <button class="btn btn-primary btn-sm" id="save">Save</button>
+        <button class="btn btn-primary btn-sm" id="discard">Cancel</button>
+    </div>
 }
 else
 {
     if (ViewBag.itemID != null)
     {
-        <p>There is no note associated to this item.</p>
-        @Html.ActionLink("Create New Note", "../Note/Create", new { id = @ViewBag.itemID, shoppingListID = @ViewBag.shoppingListID }, new { @class = "btn btn-primary btn-sm" })
+        @*<p>There is no note associated to this item.</p>
+        @Html.ActionLink("Create New Note", "../Note/Create", new { id = @ViewBag.itemID, shoppingListID = @ViewBag.shoppingListID }, new { @class = "btn btn-primary btn-sm" })*@
+        <div id="1">
+            There is no note associated to this item.<br />
+            <button class = "btn btn-primary btn-sm" id="create">Create</button>
+        </div>
+        <div id="2" style="display: none">
+            Content<br />
+            <textarea rows="4" cols="50"></textarea><br />
+            <button  class = "btn btn-primary btn-sm" id="confirm">Create</button>
+            <button class = "btn btn-primary btn-sm" id="cancel">Cancel</button>
+        </div>
     }
 }
 
 <br />
 
+
 Page @(Model.Items.PageCount < Model.Items.PageNumber ? 0 : Model.Items.PageNumber) of @Model.Items.PageNumber
 
 @Html.PagedListPager(Model.Items, page => Url.Action("Index", new { page }))
-
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 
 @section scripts {
     <script language="javascript" type="text/javascript">
+        function isEmpty() {
+            if ($('textarea').val() === '') {
+                alert("Note content cannot be empty!")
+                return false
+            }
+            else
+                return true
+        }
+
+        function getIdFromURL() {
+            var str = window.location.href;
+            return str.split("/")[5].split("?")[0];
+        }
+
         $(document).ready(function () {
             $("i[data-toggle='check']")
                 .css({ "cursor": "pointer" })
@@ -130,6 +160,73 @@ Page @(Model.Items.PageCount < Model.Items.PageNumber ? 0 : Model.Items.PageNumb
                     .fail(function (r) { alert("Failed to change check status"); });
                 });
             $('[data-toggle="tooltip"]').tooltip();
+
+            $('#create').click(function () {
+                $('#1').hide()
+                $('#2').show()
+            })
+
+            $('#cancel').click(function () {
+                $('#1').show()
+                $('#2').hide()
+                $('textarea').val("")
+            })
+
+            $('#confirm').click(function () {
+                if ($('textarea').val() === '') 
+                    alert("Note content cannot be empty!")
+                else {
+                    var itemId = getIdFromURL()
+                    var noteBody = $('textarea').val()
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/Note/Create",
+                        data: '{itemId: "' + itemId + '", noteBody: "' + noteBody + ' "}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        failure: function (response) {
+                            alert("Fail to create a new note");
+                        }
+                    })
+                    location.reload()
+                }
+
+            })
+
+            $('#edit').click(function () {
+                var content = $('#content').text()
+                $('#row').html("<textarea id = 'content' rows = 4 cols = 50>" + content + "</textarea>")
+                $('#buttonGroup').show()
+            })
+
+            $('#discard').click(function () {
+                var content = $('#content').val()
+                $('#row').html("<p id = 'content'>" + content + "</p>")
+                $('#buttonGroup').hide()
+            })
+
+            $('#save').click(function () {
+                if ($('textarea').val() === '')
+                    alert("Note content cannot be empty!")
+                else {
+                    var itemId = getIdFromURL()
+                    var noteBody = $('textarea').val()
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/Note/Edit",
+                        data: '{itemId: "' + itemId + '", noteBody: "' + noteBody + ' "}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        failure: function (response) {
+                            alert("Fail to edit the note");
+                        }
+                    })
+                    location.reload()
+                }
+
+            })
         });
     </script>
 }  

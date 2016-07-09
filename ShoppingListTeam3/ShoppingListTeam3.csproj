@@ -212,6 +212,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\ShoppingListTeam3 - Web Deploy.pubxml" />
@@ -271,11 +272,8 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTimeOffset.cshtml" />
     <Content Include="Views\Item\Create.cshtml" />
     <Content Include="Views\Item\Delete.cshtml" />
-    <Content Include="Views\Item\Details.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Item\Index.cshtml" />
-    <Content Include="Views\Note\Create.cshtml" />
-    <Content Include="Views\Note\Edit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Checked.cshtml" />
   </ItemGroup>
   <ItemGroup>

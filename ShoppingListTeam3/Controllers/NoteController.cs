@@ -3,6 +3,8 @@ using System.Net;
 using System.Web.Mvc;
 using ShoppingListTeam3.Models;
 using ShoppingListTeam3.Services;
+using ShoppingListTeam3.Data;
+using System.Web.Services;
 
 namespace ShoppingListTeam3.Controllers
 {
@@ -10,75 +12,26 @@ namespace ShoppingListTeam3.Controllers
     {
         private readonly Lazy<NoteService> _svc = new Lazy<NoteService>();
 
-        // GET: Item/Details/5
-        public ActionResult Details(int? id)
+        [WebMethod]
+        public bool Create(int itemId, string noteBody)
         {
-            if (id == null)
+            using (var ctx = new ShoppingListDbContext())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var result = ctx.Database.ExecuteSqlCommand($"INSERT INTO Note (ItemId, Body, CreatedUtc) VALUES({itemId}, '{noteBody}', '{DateTimeOffset.Now}')");
+
+                return result == 1;
             }
-            NoteViewModel itemViewModel = _svc.Value.GetNoteByItemID(id);
-            if (itemViewModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(itemViewModel);
         }
 
-        // GET: Item/Create
-        public ActionResult Create(int id, int shoppingListID)
+        [WebMethod]
+        public bool Edit(int itemId, string noteBody)
         {
-            ViewBag.shoppingListID = shoppingListID;
-            ViewBag.itemID = id;
-            return View();
-        }
-
-        // POST: Item/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemId,Body")] NoteViewModel noteViewModel, int id, int shoppingListID)
-        {
-            if (ModelState.IsValid)
+            using (var ctx = new ShoppingListDbContext())
             {
-                _svc.Value.CreateNote(noteViewModel, id);
-                return RedirectToAction("../Item/Index", new { id = id, shoppingListID = shoppingListID});
-            }
+                var result = ctx.Database.ExecuteSqlCommand($"UPDATE Note SET Body = '{noteBody}', ModifiedUtc = '{DateTimeOffset.Now}' WHERE ItemId = {itemId}");
 
-            return View(noteViewModel);
-        }
-
-        // GET: Item/Edit/5
-        public ActionResult Edit(int? id, int shoppingListID)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return result == 1;
             }
-            NoteViewModel itemViewModel = _svc.Value.GetNoteByItemID(id);
-            ViewBag.itemID = id;
-            ViewBag.shoppingListID = shoppingListID;
-            if (itemViewModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(itemViewModel);
-        }
-
-        // POST: Item/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemId,Body")] NoteViewModel noteViewModel, int id, int shoppingListID)
-        {
-            if (ModelState.IsValid)
-            {
-                _svc.Value.UpdateNote(noteViewModel);
-                return RedirectToAction("../Item/Index", new { id = id, shoppingListID = shoppingListID});
-            }
-            return View(noteViewModel);
         }
 
         // GET: Item/Delete/5
@@ -88,7 +41,7 @@ namespace ShoppingListTeam3.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            _svc.Value.DeleteItem(id);
+            _svc.Value.DeleteNote(id);
             return RedirectToAction("../Item/Index", new { id = id, shoppingListID = shoppingListID });
         }
     }

@@ -12,6 +12,14 @@ namespace ShoppingListTeam3.Data
     {
         [Key]
         public int ID { get; set; }
+        /*
+         A better approach for 0..1-One Relationship
+         Remove ID
+         Set ItemID to be both Key and Foreign Key
+         Add Navigation Property to both sides
+        */
+        //[Key]
+        //[ForeignKey("Item")] "Item" shoould be the name of the navigation property
         public int ItemId { get; set;}
         public string Body { get; set; }
         public DateTimeOffset CreatedUtc { get; set; }

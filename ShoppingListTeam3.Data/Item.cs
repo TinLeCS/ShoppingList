@@ -19,5 +19,6 @@ namespace ShoppingListTeam3.Data
         public DateTimeOffset? ModifiedUtc { get; set; }
 
         public virtual ShoppingList ShoppingList { get; set; }
+        //public virtual Note Note { get; set; }
     }
 }

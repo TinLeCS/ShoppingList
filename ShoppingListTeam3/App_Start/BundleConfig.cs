@@ -22,10 +22,13 @@ namespace ShoppingListTeam3
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/bootstrap-filestyle.js",
+                      "~/Scripts/jquery-ui.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/cupertino/jquery-ui.css",
+                      "~/Content/cupertino/theme.css",
                       "~/Content/site.css"));
         }
     }
