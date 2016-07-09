@@ -79,7 +79,7 @@
         </tr>
         <tr>
             <td id="row">
-                <p id="content">@Model.Note.Body</p>
+                <p id="content">@Model.Note.Body.TrimEnd()</p>
             </td>
             <td>
                 @Model.Note.DisplayDateTimeOffset(Model.Note.CreatedUtc)
@@ -177,18 +177,26 @@ Page @(Model.Items.PageCount < Model.Items.PageNumber ? 0 : Model.Items.PageNumb
                 else {
                     var itemId = getIdFromURL()
                     var noteBody = $('textarea').val()
+                    var time = 0;
 
                     $.ajax({
                         method: "POST",
                         url: "/Note/Create",
                         data: '{itemId: "' + itemId + '", noteBody: "' + noteBody + ' "}',
                         contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        failure: function (response) {
-                            alert("Fail to create a new note");
-                        }
+                        dataType: "json"
                     })
-                    location.reload()
+                    setInterval(function () {
+                        $('#2').html("<h4>Creating...</h4><br/><progress max='1000' value='" + time + "'></progress>")
+                        time += 100
+                    }, 10);
+
+                    setTimeout(function () {
+                        location.reload()
+                    }, 800)
+
+                    //.fail(function (r) { alert("Fail to create a new note"); });
+                    
                 }
 
             })
@@ -211,18 +219,28 @@ Page @(Model.Items.PageCount < Model.Items.PageNumber ? 0 : Model.Items.PageNumb
                 else {
                     var itemId = getIdFromURL()
                     var noteBody = $('textarea').val()
+                    var time = 0;
 
                     $.ajax({
                         method: "POST",
                         url: "/Note/Edit",
-                        data: '{itemId: "' + itemId + '", noteBody: "' + noteBody + ' "}',
+                        data: '{itemId: "' + itemId + '", noteBody: "' + noteBody + '"}',
                         contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        failure: function (response) {
-                            alert("Fail to edit the note");
-                        }
+                        dataType: "json"
                     })
-                    location.reload()
+
+                    $('#buttonGroup').hide()
+
+                    setInterval(function () {
+                        $('#row').html("<h4>Edit...</h4><br/><progress max='1000' value='" + time + "'></progress>")
+                        time += 100
+                    }, 10);
+
+                    setTimeout(function () {
+                        location.reload()
+                    }, 800)
+
+                    //.fail(function (r) { alert("Fail to edit the note"); });
                 }
 
             })

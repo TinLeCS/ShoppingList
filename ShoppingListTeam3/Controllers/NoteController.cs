@@ -8,6 +8,7 @@ using System.Web.Services;
 
 namespace ShoppingListTeam3.Controllers
 {
+    [Authorize]
     public class NoteController : Controller
     {
         private readonly Lazy<NoteService> _svc = new Lazy<NoteService>();

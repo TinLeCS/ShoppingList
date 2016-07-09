@@ -13,6 +13,7 @@ using PagedList;
 
 namespace ShoppingListTeam3.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private readonly Lazy<ItemService> _svc = new Lazy<ItemService>();
