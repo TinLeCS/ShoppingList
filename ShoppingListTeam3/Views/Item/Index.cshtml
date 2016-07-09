@@ -125,7 +125,6 @@ else
 Page @(Model.Items.PageCount < Model.Items.PageNumber ? 0 : Model.Items.PageNumber) of @Model.Items.PageNumber
 
 @Html.PagedListPager(Model.Items, page => Url.Action("Index", new { page }))
-<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 
 @section scripts {
     <script language="javascript" type="text/javascript">

@@ -1,0 +1,104 @@
+﻿@model  IEnumerable<ShoppingListTeam3.Models.ShoppingListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New Shopping List", "Create", null, new { @class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("List View", "Index", null, new { @class = "btn btn-primary btn-lg pull-right" })
+</p>
+<br/>
+<div id="menu">
+    @foreach (var list in Model.GroupBy(list => list.Group))
+    {
+        <h3>Group @Html.Encode(list.Key)</h3>
+        <table class="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Date Created
+                </th>
+                <th>
+                    Date Modified
+                </th>
+                <th>Options</th>
+            </tr>
+
+            @foreach (var item in list)
+            {
+            <tr style="color:@item.Color">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedUtc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedUtc)
+                </td>
+                <td>
+                    @Html.ActionLink("Show", "../Item/Index", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" })
+                </td>
+            </tr>
+            }
+        </table>
+    }
+</div>
+
+@section scripts {
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $('#menu').accordion()
+        })
+    </script>
+}
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Group
+            </th>
+            <th>
+                Date Created
+            </th>
+            <th>
+                Date Modified
+            </th>
+            <th>Options</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr style="color:@item.Color">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedUtc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedUtc)
+                </td>
+                <td>
+                    @Html.ActionLink("Show", "../Item/Index", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-primary btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>*@

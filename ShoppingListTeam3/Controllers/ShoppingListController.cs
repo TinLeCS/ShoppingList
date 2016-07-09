@@ -39,6 +39,12 @@ namespace ShoppingListTeam3.Controllers
             return View(ShoppingList.ToPagedList(pageNumber,pageSize));
         }
 
+        public ActionResult GroupView()
+        {
+            var ShoppingListByGroup = _svc.Value.GetList();
+            return View(ShoppingListByGroup);
+        }
+
         // GET: ShoppingList/Details/5
         //public ActionResult Details(int? id, string p1)
         public ActionResult Details(int? id)

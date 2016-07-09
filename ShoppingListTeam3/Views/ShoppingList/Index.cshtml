@@ -8,8 +8,10 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New Shopping List", "Create", "", new {@class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("Create New Shopping List", "Create", null, new {@class = "btn btn-primary btn-sm" })
+    @Html.ActionLink("Group View", "GroupView", null,  new { @class = "btn btn-primary btn-lg pull-right" })
 </p>
+<br />
 <table class="table">
     <tr>
         <th>
