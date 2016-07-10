@@ -61,7 +61,7 @@ namespace ShoppingListTeam3.Services
                         Name = vm.Name,
                         Color = vm.Color,
                         Group = vm.Group,
-                        CreatedUtc = DateTimeOffset.Now,
+                        CreatedUtc = DateTimeOffset.UtcNow,
                     };
 
                 ctx.ShoppingLists.Add(entity);
@@ -79,7 +79,7 @@ namespace ShoppingListTeam3.Services
                 entity.Name = vm.Name;
                 entity.Color = vm.Color;
                 entity.Group = vm.Group;
-                entity.ModifieddUtc = DateTimeOffset.Now;
+                entity.ModifieddUtc = DateTimeOffset.UtcNow;
 
                 return ctx.SaveChanges() == 1;
             }

@@ -5,6 +5,7 @@ using ShoppingListTeam3.Models;
 using ShoppingListTeam3.Services;
 using ShoppingListTeam3.Data;
 using System.Web.Services;
+using System.Data.SqlClient;
 
 namespace ShoppingListTeam3.Controllers
 {
@@ -18,7 +19,8 @@ namespace ShoppingListTeam3.Controllers
         {
             using (var ctx = new ShoppingListDbContext())
             {
-                var result = ctx.Database.ExecuteSqlCommand($"INSERT INTO Note (ItemId, Body, CreatedUtc) VALUES({itemId}, '{noteBody}', '{DateTimeOffset.Now}')");
+                var command = @"INSERT INTO Note (ItemId, Body, CreatedUtc) VALUES({0}, {1}, {2})";
+                var result = ctx.Database.ExecuteSqlCommand(command, itemId, noteBody, DateTimeOffset.UtcNow);
 
                 return result == 1;
             }
@@ -29,7 +31,8 @@ namespace ShoppingListTeam3.Controllers
         {
             using (var ctx = new ShoppingListDbContext())
             {
-                var result = ctx.Database.ExecuteSqlCommand($"UPDATE Note SET Body = '{noteBody}', ModifiedUtc = '{DateTimeOffset.Now}' WHERE ItemId = {itemId}");
+                var command = @"UPDATE Note SET Body = {0}, ModifiedUtc = {1} WHERE ItemId = {2}";
+                var result = ctx.Database.ExecuteSqlCommand(command, noteBody, DateTimeOffset.UtcNow, itemId);
 
                 return result == 1;
             }
