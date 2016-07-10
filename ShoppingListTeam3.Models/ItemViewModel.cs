@@ -35,6 +35,26 @@ namespace ShoppingListTeam3.Models
             }
         }
 
+        public string ShoppingListName
+        {
+            get
+            {
+                using (var ctx = new ShoppingListDbContext())
+                {
+                    return ctx.ShoppingLists.Where(e => e.ID == ShoppingListID).SingleOrDefault().Name;
+                }
+            }
+        }
+
+        public string GetShoppingListName(int id)
+        {
+
+            using (var ctx = new ShoppingListDbContext())
+            {
+                return ctx.ShoppingLists.Where(e => e.ID == id).SingleOrDefault().Name;
+            }
+        }
+
         public string ConvertToPriorityMessage(int priority)
         {
             switch (priority)
@@ -50,9 +70,6 @@ namespace ShoppingListTeam3.Models
             }
         }
 
-        public bool ToBool(bool? input)
-        {
-            return (bool)input;
-        }
+
     }
 }
