@@ -42,7 +42,7 @@
         {
             selectedRow = "success";
         }
-        <tr class="@selectedRow">
+        <tr class="@selectedRow" style="color:@item.Color">
             <td>
                 @Html.DisplayFor(modelItem => item.IsChecked, new { Id = item.ID })
             </td>

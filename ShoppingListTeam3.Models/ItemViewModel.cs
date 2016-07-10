@@ -24,6 +24,16 @@ namespace ShoppingListTeam3.Models
         public DateTimeOffset CreatedUtc { get; set; }
         [Display(Name = "Modified Date")]
         public DateTimeOffset? ModifiedUtc { get; set; }
+        public string Color
+        {
+            get
+            {
+                using (var ctx = new ShoppingListDbContext())
+                {
+                    return ctx.ShoppingLists.Where(e => e.ID == ShoppingListID).SingleOrDefault().Color;
+                }
+            }
+        }
 
         public string ConvertToPriorityMessage(int priority)
         {
