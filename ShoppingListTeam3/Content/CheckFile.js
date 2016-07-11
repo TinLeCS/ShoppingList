@@ -32,7 +32,7 @@
 		}
 		else {
 			file.value = null;
-			alert("The image size cannot exceed 4 MB and cannot be 0.");
+			alert("The image size cannot exceed 4 MB and cannot be 0 MB.");
 		}
 		return isValidFile;
 	}

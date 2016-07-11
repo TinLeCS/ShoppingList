@@ -146,6 +146,11 @@ Page @(Model.Items.PageCount < Model.Items.PageNumber ? 0 : Model.Items.PageNumb
         }
 
         $(document).ready(function () {
+            $('img').error(function () {
+                $(this).attr('src', '/Content/Item/NoImage.jpg');
+            });
+
+
             $("i[data-toggle='check']")
                 .css({ "cursor": "pointer" })
                 .click(function (e) {
@@ -198,8 +203,7 @@ Page @(Model.Items.PageCount < Model.Items.PageNumber ? 0 : Model.Items.PageNumb
                         location.reload()
                     }, 800)
 
-                    //.fail(function (r) { alert("Fail to create a new note"); });
-                    
+                    //.fail(function (r) { alert("Fail to create a new note"); });               
                 }
 
             })
