@@ -18,6 +18,7 @@ namespace ShoppingListTeam3.Controllers
     public class ShoppingListController : Controller
     {
         private readonly Lazy<ShoppingListService> _svc;
+        private readonly Lazy<ItemService> _itemSvc = new Lazy<ItemService>();
 
         public ShoppingListController()
         {
@@ -134,6 +135,7 @@ namespace ShoppingListTeam3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            _itemSvc.Value.DeleteAllItems(id, Server.MapPath("~/Content/Item"));
             _svc.Value.DeleteList(id);
             return RedirectToAction("Index");
         }

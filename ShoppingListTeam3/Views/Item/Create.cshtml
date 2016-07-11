@@ -4,10 +4,12 @@
     ViewBag.Title = "Create New Item";
 }
 
-<h2>Create Item for <b>@Model.GetShoppingListName(int.Parse(Request.Params["shoppingListID"]))</b> Shopping List</h2>
+@*<h2>Create Item for <b>@Model.GetShoppingListName(int.Parse(Request.Params["shoppingListID"]))</b> Shopping List</h2>*@
+<h2>Create Item for <b>@Model.GetShoppingListName(ViewBag.shoppingListID)</b> Shopping List</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Item", new { shoppingListID = ViewBag.shoppingListID },FormMethod.Post,
+                new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
@@ -25,7 +27,7 @@
         <div class="form-group">
             @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-5">
-                <input type="file" name="Image" class="filestyle" data-buttonName="btn-primary" data-buttonText="Choose image" data-placeholder="No file" data-iconName="glyphicon glyphicon-picture">
+                <input type="file" name="Image" class="filestyle" data-buttonName="btn-primary" data-buttonText="Choose image" data-placeholder="No file" data-iconName="glyphicon glyphicon-picture" onchange = "return CheckFile(this)"}>
             </div>
         </div>
 
@@ -88,4 +90,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/CheckFile.js")
 }

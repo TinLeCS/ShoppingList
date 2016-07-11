@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ShoppingListTeam3.Models;
+using System.IO;
 
 namespace ShoppingListTeam3.Services
 {
@@ -44,7 +45,7 @@ namespace ShoppingListTeam3.Services
                 return null;
         }
 
-        public bool CreateItem(ItemViewModel vm, int shoppingListId)
+        public int[] CreateItem(ItemViewModel vm, int shoppingListId)
         {
             using (var ctx = new ShoppingListDbContext())
             {
@@ -60,11 +61,13 @@ namespace ShoppingListTeam3.Services
 
                 ctx.Items.Add(entity);
 
-                return ctx.SaveChanges() == 1;
+                int[] result = new int[] { ctx.SaveChanges(), entity.ID };
+
+                return result;
             }
         }
 
-        public bool UpdateItem(ItemViewModel vm)
+        public int[] UpdateItem(ItemViewModel vm)
         {
             using (var ctx = new ShoppingListDbContext())
             {
@@ -75,7 +78,9 @@ namespace ShoppingListTeam3.Services
                 entity.IsChecked = vm.IsChecked.Value;
                 entity.ModifiedUtc = DateTimeOffset.UtcNow;
 
-                return ctx.SaveChanges() == 1;
+                int[] result = new int[] { ctx.SaveChanges(), entity.ID };
+
+                return result;
             }
         }
 
@@ -94,12 +99,28 @@ namespace ShoppingListTeam3.Services
             }
         }
 
-        public void DeleteAllItems(int? shoppingListID)
+        public void DeleteAllItems(int? shoppingListID, string path)
         {
             using (var ctx = new ShoppingListDbContext())
             {
-                ctx.Database.ExecuteSqlCommand($"DELETE FROM Item WHERE ShoppingListID = {shoppingListID}");
+                //ctx.Database.ExecuteSqlCommand($"DELETE FROM Item WHERE ShoppingListID = {shoppingListID}");
+                var items = ctx.Items.Where(item => item.ShoppingListID == shoppingListID);
+                foreach(var item in items)
+                {
+                    ctx.Items.Remove(item);
+                    DeleteFile(path + "\\" + item.ID + ".jpg");
+                }
+                ctx.SaveChanges();
             }          
+        }
+
+        public void DeleteFile(string path)
+        {
+            FileInfo file = new FileInfo(path);
+            if (file.Exists)
+            {
+                file.Delete();
+            }
         }
     }
 }

@@ -17,9 +17,12 @@
     </div>
 
 </p>
-<table class="table">
+<table class="table" style="vertical-align:middle">
     <tr>
         <th></th>
+        <th>
+            Image
+        </th>
         <th>
             Content
         </th>
@@ -45,6 +48,9 @@
         <tr class="@selectedRow" style="color:@item.Color">
             <td>
                 @Html.DisplayFor(modelItem => item.IsChecked, new { Id = item.ID })
+            </td>
+            <td>
+                <img src="~/@String.Format($"Content/Item/{item.ID}.jpg")" alt="No Image" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Content)
@@ -88,7 +94,6 @@
                 @Model.Note.DisplayDateTimeOffset(Model.Note.ModifiedUtc)
             </td>
             <td>
-                @*@Html.ActionLink("Edit", "../Note/Edit", new { id = Model.Note.ItemId, shoppingListID = ViewBag.shoppingListID }, new { @class = "btn btn-primary btn-sm" })*@
                 <button class="btn btn-primary btn-sm" id="edit">Edit</button>
                 @Html.ActionLink("Delete", "../Note/Delete", new { id = Model.Note.ItemId, shoppingListID = ViewBag.shoppingListID },
                new { onclick = "return confirm('Do you really want to delete this note?')", @class = "btn btn-primary btn-sm" })
@@ -104,8 +109,6 @@ else
 {
     if (ViewBag.itemID != null)
     {
-        @*<p>There is no note associated to this item.</p>
-        @Html.ActionLink("Create New Note", "../Note/Create", new { id = @ViewBag.itemID, shoppingListID = @ViewBag.shoppingListID }, new { @class = "btn btn-primary btn-sm" })*@
         <div id="1">
             There is no note associated to this item.<br />
             <button class = "btn btn-primary btn-sm" id="create">Create</button>
