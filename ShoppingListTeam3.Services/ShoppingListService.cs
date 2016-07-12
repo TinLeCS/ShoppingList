@@ -78,7 +78,7 @@ namespace ShoppingListTeam3.Services
 
                 entity.Name = vm.Name;
                 entity.Color = vm.Color;
-                entity.Group = vm.Group;
+                entity.Group = (vm.Group == null || vm.Group == "") ? "General" : vm.Group;
                 entity.ModifieddUtc = DateTimeOffset.UtcNow;
 
                 return ctx.SaveChanges() == 1;
