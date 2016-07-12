@@ -18,7 +18,6 @@ namespace ShoppingListTeam3.Models
         [RegularExpression (@"^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$", ErrorMessage = "Not a correct value for Hex Color Code")]
         public string Color { get; set; }
 
-        [Required]
         public string Group { get; set; }
 
         [Required]

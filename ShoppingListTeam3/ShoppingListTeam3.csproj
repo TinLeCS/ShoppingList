@@ -224,6 +224,7 @@
     <Content Include="Content\cupertino\jquery-ui.css" />
     <Content Include="Content\cupertino\jquery-ui.min.css" />
     <Content Include="Content\cupertino\theme.css" />
+    <Content Include="Content\Item\NoImage.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -297,7 +298,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Item\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
