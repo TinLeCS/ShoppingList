@@ -60,7 +60,7 @@ namespace ShoppingListTeam3.Services
                         UserID = _userID,
                         Name = vm.Name,
                         Color = vm.Color,
-                        Group = vm.Group ?? "General",
+                        Group = (vm.Group == null || vm.Group == "") ? "General" : vm.Group,
                         CreatedUtc = DateTimeOffset.UtcNow,
                     };
 
