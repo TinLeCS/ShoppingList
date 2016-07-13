@@ -88,6 +88,15 @@
                 <p id="content">@Model.Note.Body.TrimEnd()</p>
             </td>
             <td>
+                @functions{
+                    public string DisplayDateTimeOffset(DateTimeOffset? input)
+                    {
+                        var timeZoneOffset = (Request.Cookies["timeZoneOffset"] != null) ? int.Parse(Request.Cookies["timeZoneOffset"].Value) : 0;
+                        return (input != null) ? input.Value.Add(new TimeSpan(0, -timeZoneOffset, 0)).ToString("G") : "Unknown";
+                    }
+
+
+                }
                 @Model.Note.DisplayDateTimeOffset(Model.Note.CreatedUtc)
             </td>
             <td>
