@@ -1,4 +1,7 @@
 ﻿@model System.DateTimeOffset?
 <span>
-    @(Model.HasValue ? Model.Value.LocalDateTime.ToString("G") : "Unknown")
+    @{
+        var timeZoneOffset = (Request.Cookies["timeZoneOffset"] != null) ? int.Parse(Request.Cookies["timeZoneOffset"].Value) : 0;
+        @(Model.HasValue ? Model.Value.Add(new TimeSpan(0, -timeZoneOffset, 0)).ToString("G") : "Unknown")
+    }
 </span>
