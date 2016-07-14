@@ -41,5 +41,10 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script language="javascript" type="text/javascript">
+            $(document).ready(function () {
+                document.cookie = "timeZoneOffset = " + new Date().getTimezoneOffset()
+            })
+    </script>
 </body>
 </html>
