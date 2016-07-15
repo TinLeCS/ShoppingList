@@ -4,28 +4,103 @@
 
 <div class="jumbotron">
     <h1>Shopping List Application</h1>
-    <p class="lead">A simple ASP.NET MVC application allowing people to easily keep track and manage their shopping lists.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <div id="slideshow">
+        <div class="active">
+            <img src="~/Content/0.png" class=".img-responsive" alt="Slideshow Image 0" />
+            <b>Use Paging for Management</b>
+        </div>
+
+        <div>
+            <img src="~/Content/1.png" class=".img-responsive" alt="Slideshow Image 1" />
+            <b>Provide Two View Style - List View and Group View</b>
+        </div>
+
+        <div>
+            <img src="~/Content/2.png" class=".img-responsive" alt="Slideshow Image 2" />
+            <b>Item Has the Same Color as the Shopping List and Apply AJAX for Checking Item</b>
+        </div>
+
+        <div>
+            <img src="~/Content/3.png" class=".img-responsive" alt="Slideshow Image 3" />
+            <b>Allow to Upload Image for Each Item</b>
+        </div>
+
+        <div>
+            <img src="~/Content/4.png" class=".img-responsive" alt="Slideshow Image 4" />
+            <b>Provide Context to Help Navigating When Create, Edit, Delete Item</b>
+        </div>
+
+        <div>
+            <img src="~/Content/5.png" class=".img-responsive" alt="Slideshow Image 5" />
+            <b>Apply AJAX to Provide Users a Seamless Experience in Creating and Editing Note</b>
+        </div>
+
+    </div>
+    <br />
+    <center><p><a href="~/Account/Login" class="btn btn-primary btn-lg">Demo Login &raquo;</a></p></center>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+@section Scripts{
+    <script type="text/javascript">
+
+    function slideSwitch() {
+        var $active = $('#slideshow DIV.active');
+
+        if ( $active.length == 0 ) $active = $('#slideshow DIV:last');
+
+        // use this to pull the divs in the order they appear in the markup
+        var $next =  $active.next().length ? $active.next()
+            : $('#slideshow DIV:first');
+
+        $active.addClass('last-active');
+
+        $next.css({opacity: 0.0})
+            .addClass('active')
+            .animate({opacity: 1.0}, 1000, function() {
+                $active.removeClass('active last-active');
+            });
+    }
+
+    $(function() {
+        setInterval( "slideSwitch()", 5000 );
+    });
+
+    </script>
+}
+
+@section Style{
+    <style type="text/css">
+        /*** set the width and height to match your images **/
+        #slideshow {
+            position: relative;
+            height: 420px;
+        }
+
+            #slideshow DIV {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 8;
+                opacity: 0.0;
+                height: 420px;
+                background-color: #eee;
+            }
+
+                #slideshow DIV.active {
+                    z-index: 10;
+                    opacity: 1.0;
+                }
+
+                #slideshow DIV.last-active {
+                    z-index: 9;
+                }
+
+                #slideshow DIV IMG {
+                    height: 370px;
+                    display: block;
+                    border: 0;
+                    margin-bottom: 10px;
+                }
+    </style>
+
+}

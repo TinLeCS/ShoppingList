@@ -6,7 +6,16 @@
     <title>@ViewBag.Title - Shopping List</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @if (IsSectionDefined("Style"))
+    {
+        @RenderSection("Style");
+    }
+    else
+    {
+        <style type="text/css">
+            /* Default styles */
+        </style>
+    }
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -42,9 +51,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script language="javascript" type="text/javascript">
-            $(document).ready(function () {
-                document.cookie = "timeZoneOffset = " + new Date().getTimezoneOffset()
-            })
+        $(document).ready(function () {
+            document.cookie = "timeZoneOffset = " + new Date().getTimezoneOffset()
+        })
     </script>
 </body>
 </html>

@@ -58,11 +58,3 @@
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageNumber
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-
-@*@section scripts {
-    <script language="javascript" type="text/javascript">
-            $(document).ready(function () {
-                document.cookie = "timeZoneOffset = " + new Date().getTimezoneOffset()
-            })
-    </script>
-}*@

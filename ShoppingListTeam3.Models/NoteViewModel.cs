@@ -15,10 +15,5 @@ namespace ShoppingListTeam3.Models
         public string Body { get; set; }
         public DateTimeOffset CreatedUtc { get; set; }
         public DateTimeOffset? ModifiedUtc { get; set; }
-
-        public string DisplayDateTimeOffset(DateTimeOffset? input)
-        {
-            return (input != null) ? input.Value.LocalDateTime.ToString("G") : "Unknown";
-        }
     }
 }
